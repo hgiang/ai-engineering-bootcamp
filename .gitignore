@@ -1,1 +1,4 @@
 .DS_Store
+*.docx
+*.md
+!week1/README.md
