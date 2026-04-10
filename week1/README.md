@@ -43,6 +43,7 @@ python prompt_experiments.py
 2. Create a new **Web Service** on [render.com](https://render.com)
 3. Connect your GitHub repo
 4. Set:
+   - **Python version:** `3.12`
    - **Build command:** `pip install -r requirements.txt`
    - **Start command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
    - **Environment variable:** `OPENAI_API_KEY` = your key
