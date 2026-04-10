@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from functools import cache
 from typing import Literal, cast
 
 from dotenv import load_dotenv
@@ -15,7 +16,6 @@ app = FastAPI(
 )
 
 MODEL = "gpt-4o-mini"
-client = OpenAI()
 Sentiment = Literal["positive", "negative", "neutral"]
 SENTIMENT_LABELS: tuple[Sentiment, ...] = ("positive", "negative", "neutral")
 
@@ -69,8 +69,14 @@ SENTIMENT_PROMPT = (
     "Text:\n{text}"
 )
 
+
+@cache
+def _get_client() -> OpenAI:
+    return OpenAI()
+
+
 def _call_llm(prompt: str, max_tokens: int = 300) -> str:
-    response = client.chat.completions.create(
+    response = _get_client().chat.completions.create(
         model=MODEL,
         max_tokens=max_tokens,
         messages=[{"role": "user", "content": prompt}],
